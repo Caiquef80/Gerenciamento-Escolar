@@ -16,6 +16,18 @@ class Usuario:
         self.tipo = tipo
         self.ativo = bool(ativo)
 
+
+    def criar(self):
+        pass
+
+    def atualizar(self):
+        pass
+    
+    def excluir(self):
+        "Desativar o usuario (soft delete)"
+        pass
+
+
     @classmethod
     def login(cls, email):
         DB = Database()
@@ -36,4 +48,4 @@ class Usuario:
             tipo: {self.tipo}
             Ativo: {self.ativo}
         """)
-    
+
