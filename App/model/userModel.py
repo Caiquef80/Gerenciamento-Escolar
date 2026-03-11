@@ -16,36 +16,22 @@ class Usuario:
         self.tipo = tipo
         self.ativo = bool(ativo)
 
-
-    def criar(self):
-        pass
-
-    def atualizar(self):
-        pass
-    
-    def excluir(self):
-        "Desativar o usuario (soft delete)"
-        pass
-
-
     @classmethod
     def login(cls, email):
         DB = Database()
-        sql = "SELECT * FROM usuarios WHERE email=%s;"
+        sql = "SELECT * FROM usuarios WHERE email = %s"
         params = (email,)
-        result = DB.fecthone(sql, params)
+        result = DB.fetchOne(sql, params)
         if not result: return Usuario()
-        user = Usuario(*result)
-        return user
-
+        user = Usuario(*result.values())
+        return user 
     
     def showInfo(self):
-        print(f"""
+        print(f"""  
             ID: {self.id}
             Nome: {self.nome}
             Email: {self.email}
             Senha: {self.senha}
-            tipo: {self.tipo}
+            Tipo: {self.tipo}
             Ativo: {self.ativo}
-        """)
-
+        """) 

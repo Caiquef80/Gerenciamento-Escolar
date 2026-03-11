@@ -2,12 +2,12 @@ import mysql.connector
 from os import getenv
 from dotenv import load_dotenv
 from contextlib import contextmanager
-from mysql.connector import Error
+from App.utils.singleton import Singleton
 
 load_dotenv(override=True)
 
-class Database():
 
+class Database(metaclass=Singleton):
     def __init__(self):
         self.host = getenv("DB_HOST")
         self.port = int(getenv("DB_PORT"))
@@ -26,16 +26,15 @@ class Database():
                 use_pure = True
             )
             return conexao
-        except Error as e:
-            print(f'Erro na CONN: {e}')
-            raise RuntimeError("Erro ao conectar ao banco de dados")
-
-
+        except Exception as e:
+            print(f"Error conexao: {e}")
+            raise RuntimeError("Erro ao conectar ao banco de dados.")
+        
     @contextmanager
-    def getCursor(self):
+    def getCursor(self, dictionary=True):
         conn = self.connect()
-        cursor = conn.cursor()
-        try:
+        cursor = conn.cursor(dictionary=dictionary)
+        try: 
             yield conn, cursor
             conn.commit()
         except Exception:
@@ -46,36 +45,29 @@ class Database():
                 cursor.close()
             finally:
                 conn.close()
-    
-    def execute(self, sql, params=None):
-        """Executa INSERT/UPDATE/DELET"""
+
+    def execute(self, sql, params=None): 
         with self.getCursor() as (_, cursor):
             cursor.execute(sql, params)
             return cursor.rowcount
-
+        
     def insert(self, sql, params=None):
-        """Executa o INSERT e retorna o ID"""
         with self.getCursor() as (_, cursor):
             cursor.execute(sql, params)
             return cursor.lastrowid
-    
-    def fecthone(self, sql, params=None):
-        "RETORNA o PRIMEIRO registro do QUERY"
+        
+    def fetchOne(self, sql, params=None):
         with self.getCursor() as (_, cursor):
             cursor.execute(sql, params)
             return cursor.fetchone()
         
-    def fecthall(self, sql, params=None):
-        "RETORNA TODOS os Registros do QUERY"
+    def fetchAll(self, sql, params=None):
         with self.getCursor() as (_, cursor):
             cursor.execute(sql, params)
             return cursor.fetchall()
 
-
 if __name__ == "__main__":
-    DB = Database
-    print(dir(DB))
-    resultado = DB.fecthall("SELECT * FROM alunos")
-    print(resultado)
+    DB = Database()
+    print(id(DB))
+    # result = DB.fetchall("SELECT * FROM alunos")  
 
-    

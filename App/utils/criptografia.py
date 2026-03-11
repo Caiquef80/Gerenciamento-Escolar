@@ -4,9 +4,10 @@ class Criptografia:
 
     @classmethod
     def gerarHash(cls, senha):
+        
         senha = bytes(senha, "utf-8")
         hash = bcrypt.hashpw(senha, bcrypt.gensalt())
-        return hash.decode()
+        return hash.decode('utf-8')
 
     @classmethod
     def compararSenha(cls, senha, hash):
@@ -17,13 +18,10 @@ class Criptografia:
         except:
             return False
 
-
 if __name__ == "__main__":
-    senha = "123456"
+    senha = "123"
     senha_criptografada = Criptografia.gerarHash(senha)
-    print(f'Senha normal: {senha}')
-    print(f'Senha cript: {senha_criptografada}')
-
+    print (f"senha normal {senha}")
+    print (f"senha crip {senha_criptografada}")
     result = Criptografia.compararSenha(senha, senha_criptografada)
-    print(f"Resultado: {result}")
-
+    print(f"Resultado é {result}")
