@@ -2,7 +2,6 @@ import bcrypt
 
 class Criptografia:
 
-
     @classmethod
     def gerarHash(cls, senha):
         senha = bytes(senha, "utf-8")
