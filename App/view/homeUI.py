@@ -24,6 +24,7 @@ class HomeUI(QMainWindow):
         self.menuOpt = QMenu(self)
         self.createMenu()
         self.btnOptions.clicked.connect(self.showMenu)
+        self.btnPesquisa.clicked.connect(self.searchStudentByName)
         
         
         self.consultarTurmas()
@@ -69,7 +70,11 @@ class HomeUI(QMainWindow):
         
         self.populaStackAlunos(alunos)        
 
-
+    def searchStudentByName(self):
+        name = self.barPesquisa.text()
+        alunos = StudentController.searchStudent(name)
+        self.populaStackAlunos(alunos)
+        
     
     def populaStackAlunos(self, alunos):
         self.clearStackCards(self.scrollAreaWidgetContentAlunos)
