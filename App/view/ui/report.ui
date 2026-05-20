@@ -57,6 +57,16 @@ QListWidget:hover {
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item alignment="Qt::AlignHCenter">
         <widget class="QLabel" name="label">
+         <property name="font">
+          <font>
+           <family>Georgia,serif</family>
+           <pointsize>-1</pointsize>
+           <weight>87</weight>
+           <bold>true</bold>
+           <underline>true</underline>
+           <kerning>false</kerning>
+          </font>
+         </property>
          <property name="styleSheet">
           <string notr="true">QLabel {
 	font-family: Georgia, serif;
@@ -65,8 +75,7 @@ QListWidget:hover {
  	color: #4CAF50;
   	letter-spacing: -0.5px;
 	text-decoration: underline;
-}
-</string>
+}</string>
          </property>
          <property name="text">
           <string>Ocorrências do Aluno</string>
@@ -108,7 +117,7 @@ QListWidget:hover {
           <widget class="QScrollArea" name="scrollArea">
            <property name="font">
             <font>
-             <kerning>false</kerning>
+             <kerning>true</kerning>
             </font>
            </property>
            <property name="widgetResizable">
