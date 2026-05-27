@@ -74,9 +74,6 @@ class HomeUI(QMainWindow):
         if self.currentUser["tipo"] == "secretaria":
             action.pop()
         
-        if self.currentUser["tipo"] == "secretaria":
-            action.pop()
-        
         for texto, funcao in action:
             event = QAction(texto, self)
             event.triggered.connect(funcao)
